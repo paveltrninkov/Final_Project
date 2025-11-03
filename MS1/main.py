@@ -7,7 +7,7 @@
 
 def main() -> None:
     count = 0
-    while True:
+    while False:
         count += 1
         selection = gather_user_input()
         break
