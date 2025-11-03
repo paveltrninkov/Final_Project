@@ -10,6 +10,7 @@ def main() -> None:
     while False:
         count += 1
         selection = gather_user_input()
+        decision(selection)
         break
     return None
 
@@ -26,4 +27,10 @@ def win_check(target, disks):
     return None
 
 def print_status():
+    return None
+
+def save_game():
+    return None
+
+def end():
     return None
