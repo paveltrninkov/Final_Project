@@ -12,9 +12,11 @@ def main() -> None:
     Returns: None.
     '''
     while True:
-        selection = gather_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "])
-        decision(selection)
-        break
+        selection = gather_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "])[0]
+        if selection == 1:
+            start_new_game()
+        else:
+            break
     return None
 
 def gather_user_input(user_questions) -> list:
@@ -26,13 +28,14 @@ def gather_user_input(user_questions) -> list:
     answers = []
     for question in user_questions:
         user_input = input(question)
-        if validate_input(user_input, len(user_questions)):
+        if validate_input(user_input):
             answers.append(int(user_input))
         else:
             print("Error: Invalid answer.")
+    print(answers)
     return answers
 
-def validate_input(user_input:str, max_limit:int) -> bool:
+def validate_input(user_input:str) -> bool:
     ''''
     Purpose: Helper function to validate user inputs
     Parameters: User input.
@@ -45,13 +48,10 @@ def validate_input(user_input:str, max_limit:int) -> bool:
     
     if user_input.isdigit() != True:
         return False
-    
-    if int(user_input) > max_limit:
-        return False
 
     return True
 
-def decision(selection):
+def start_new_game() -> None:
     return None
 
 def move(source, target, disks):
