@@ -15,9 +15,11 @@ def main() -> None:
     '''
     selection = get_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "], [2], [1])
     if selection[0] == 1:
-        start_new_game()
+        towers, target, n_disks = start_new_game()
     else:
         return None
+    
+    play(towers, n_disks, target)
 
 def get_user_input(user_questions:list, max_limit:list, min_limit:list) -> list:
     ''''
@@ -58,7 +60,7 @@ def validate_input(user_input:str) -> bool:
 
     return True
 
-def start_new_game() -> None:
+def start_new_game() -> list:
     ''''
     Purpose: Function to begin a new game.
     Parameters: None.
@@ -66,13 +68,10 @@ def start_new_game() -> None:
     '''
     print("Starting new game.")
     #unpack list of inputs into their respective variables
-    n_towers, n_disks, target_tower = get_user_input(["Number of Towers [min=3, max=9]: ", "Number of disks [max=3, min=9]: ", "Target Tower[min=2, max=3]: "], [9, 9, 3], [3, 3, 2])
+    n_towers, n_disks = get_user_input([f"Number of Towers [min=3, max=9]: ", "Number of disks [max=3, min=9]: "], [9, 9], [3, 3])
+    target_tower = get_user_input([f"Target Tower [min=2, max={n_towers}]: "], [n_towers], [2])
     towers = initialize_towers(n_towers, n_disks)
-    while True:
-        display(towers, n_disks)
-        
-        break
-    return None
+    return [towers, target_tower, n_disks]
 
 def initialize_towers(num_tower: int, num_disks: int) -> dict:
     ''''
@@ -109,7 +108,25 @@ def display(towers:dict, size: int) -> None:
         print()
     return None
 
-def move(towers:dict):
+def play(towers:dict, n_disks:int, target_tower: int) -> None:
+    while True:
+        display(towers, n_disks)
+        question = "Enter 1 or 2 or 3: "
+        print("1 - Move a Disk\n2 - Save and end\n3 - End without saving")
+        decision = get_user_input([question], [3], [1])[0]
+        if decision == 1:
+            move(towers)
+        elif decision == 3:
+            break
+
+def move(towers:dict) -> None:
+    questions = ["Source Tower: ", "Destination Tower: "]
+    source, destination = get_user_input(questions, [len(towers), len(towers)], [1, 1])
+    if len(towers[source].get_lst()) < 1:
+        print("Tower is empty. Please try again.")
+        return None
+    disk = towers[source].pop()
+    towers[destination].push(disk)
     return None
 
 def win_check(target, disks):
