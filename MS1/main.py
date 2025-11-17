@@ -69,7 +69,7 @@ def start_new_game() -> list:
     print("Starting new game.")
     #unpack list of inputs into their respective variables
     n_towers, n_disks = get_user_input([f"Number of Towers [min=3, max=9]: ", "Number of disks [max=3, min=9]: "], [9, 9], [3, 3])
-    target_tower = get_user_input([f"Target Tower [min=2, max={n_towers}]: "], [n_towers], [2])
+    target_tower = get_user_input([f"Target Tower [min=2, max={n_towers}]: "], [n_towers], [2])[0]
     towers = initialize_towers(n_towers, n_disks)
     return [towers, target_tower, n_disks]
 
@@ -109,33 +109,45 @@ def display(towers:dict, size: int) -> None:
     return None
 
 def play(towers:dict, n_disks:int, target_tower: int) -> None:
+    count = 0
     while True:
         display(towers, n_disks)
         question = "Enter 1 or 2 or 3: "
         print("1 - Move a Disk\n2 - Save and end\n3 - End without saving")
         decision = get_user_input([question], [3], [1])[0]
         if decision == 1:
+            count += 1
             move(towers)
+            if win_check(towers, target_tower, n_disks):
+                print(f"Good job! Transfer achieved in {count} steps.")
+                break
         elif decision == 3:
             break
 
 def move(towers:dict) -> None:
     questions = ["Source Tower: ", "Destination Tower: "]
     source, destination = get_user_input(questions, [len(towers), len(towers)], [1, 1])
-    if len(towers[source].get_lst()) < 1:
+    if towers[source].is_empty():
         print("Tower is empty. Please try again.")
         return None
     disk = towers[source].pop()
     towers[destination].push(disk)
     return None
 
-def win_check(target, disks):
-    return None
+def win_check(towers:dict, target:int, n_disks:int) -> bool:
+    win_list = []
+    for n in range(n_disks, 0, -1):
+        win_list.append(n)
+    if towers[target].is_empty():
+        return False
+    if len(towers[target]) < len(win_list):
+        return False
+    for i in range(0, len(win_list)):
+        if towers[target].get_lst()[i] != win_list[i]:
+            return False
+    return True
 
 def save_game():
-    return None
-
-def end():
     return None
 
 main()
