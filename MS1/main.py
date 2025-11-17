@@ -11,13 +11,11 @@ def main() -> None:
     Parameters: None.
     Returns: None.
     '''
-    while True:
-        selection = gather_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "], 2)
-        if selection[0] == 1:
-            start_new_game()
-        else:
-            break
-    return None
+    selection = gather_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "], 2)
+    if selection[0] == 1:
+        start_new_game()
+    else:
+        return None
 
 def gather_user_input(user_questions:list, max_limit:int) -> list:
     ''''
@@ -27,9 +25,7 @@ def gather_user_input(user_questions:list, max_limit:int) -> list:
     '''
     answers = []
     question = 0
-    while True:
-        if question > len(user_questions) - 1:
-            break
+    while question < len(user_questions):
         user_input = input(user_questions[question])
         if validate_input(user_input) != True:
             print("Error: Invalid input.")
@@ -58,6 +54,11 @@ def validate_input(user_input:str) -> bool:
     return True
 
 def start_new_game() -> None:
+    ''''
+    Purpose: Function to begin a new game
+    Parameters: None.
+    Returns: None.
+    '''
     return None
 
 def move(source, target, disks):
