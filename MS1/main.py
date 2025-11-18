@@ -24,8 +24,10 @@ def main() -> None:
                 towers = pickle.load(file)
         except IOError:
             print("Couldn't open the file.")
+            towers = start_new_game()
         except FileNotFoundError:
             print("Couldn't find your file.")
+            towers = start_new_game()
     else:
         return None
     
