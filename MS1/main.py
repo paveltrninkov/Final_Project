@@ -157,6 +157,10 @@ def move(towers:dict) -> int:
     if towers[source].is_empty():
         print("Tower is empty. Please try again.")
         return None
+    if len(towers[destination]) > 0:
+        if towers[source].top() > towers[destination].top():
+            print("Invalid move . Can ' t put bigger disk on a smaller one . Please try again !")
+            return None
     disk = towers[source].pop()
     towers[destination].push(disk)
     towers["count"] += 1
