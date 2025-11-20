@@ -14,6 +14,8 @@ def main() -> None:
     Parameters: None.
     Returns: None.
     '''
+    print("WELCOME TO HANOI TOWERS GAME!")
+    print()
     selection = get_user_input(["Enter 1 to Start a new game and 2 to Resume a saved game: "], [2], [1])
     if selection[0] == 1:
         towers = start_new_game()
@@ -138,7 +140,7 @@ def play(towers:dict) -> None:
             move(towers)
             if win_check(towers):
                 display(towers)
-                print(f"Good job! Transfer achieved in {towers["count"]} steps.")
+                print(f"Good job! Transfer achieved in {towers['count']} steps.")
                 break
         if decision == 2:
             save_game(towers)
@@ -185,6 +187,11 @@ def win_check(towers:dict) -> bool:
     return True
 
 def save_game(towers:dict) -> None:
+    '''
+    Purpose: Save Game
+    Parameters: Valid file
+    Returns: None
+    '''
     #the one input that doesn't require use of the helper function
     filename = get_file_name()
     try:
@@ -196,7 +203,10 @@ def save_game(towers:dict) -> None:
     return None
 
 def get_file_name() -> str:
+    '''
+    Purpose: Load a saved game
+    Parameters: Valid filename
+    Returns: Filename
+    '''    
     filename = input("Enter file name (e.g: game.p): ")
     return filename
-
-main()
